@@ -1,0 +1,36 @@
+---
+title: "Tidy Tuesday 2"
+description: |
+  First Assignment Tidy Tuesday
+author:
+  - name: Ethan Deutsch
+date: 09-13-2021
+output:
+    html_document:
+    toc: true
+    toc_float: true
+    df_print: paged
+    code_download: true
+---
+```{r}
+library(dplyr)
+library(ggplot2)
+library(tidytuesdayR)
+library(tidymodels)
+library(tidyverse)
+library(rvest)
+```
+
+```{r}
+tuesdata <- tidytuesdayR::tt_load(2021, week = 39)
+nominees <- tuesdata$nominees
+```
+
+```{r}
+nominees %>%
+  select(-c(logo, page, page_id))
+```
+
+Distill is a publication format for scientific and technical writing, native to the web.
+
+Learn more about using Distill at <https://rstudio.github.io/distill>.

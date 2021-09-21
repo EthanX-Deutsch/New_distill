@@ -1,0 +1,22 @@
+---
+title: "Ethan Deutsch"
+description: |
+  Welcome to my R Website and Online Portfolio
+site: distill::distill_website
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+
+# Learn more about creating websites with Distill at:
+# https://rstudio.github.io/distill/website.html
+
+```
+
+![](EthanPicture.JPG)
+
+## About Me: My name is Ethan Deutsch and I am a senior majoring in Statistics and minoring in Political Science at Macalester College in St. Paul, MN. I am currently an Assistant Statistician for the Volleyball and Basketball teams at Macalester and I am a Data Analyst Intern for Compeer Financial in Lakeville, MN. Additionally, I am also a student-athlete at Macalester playing Golf for the past four years. 
+
+## Education: I graduated from Lehman High School in 2018 and I am currently en route to graduate from Macalester with a Bachelors of Science in 2022. 
+
+## Link to my Resume: https://docs.google.com/document/d/e/2PACX-1vTyDIjxu7meAK0iJ47Ffm_MzMGJdP2fsGpCNQ_p8kQaRhRk-Z_9eUf6xsFHmTJD6ZCOE_rDTRZm0bRM/pub
