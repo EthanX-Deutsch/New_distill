@@ -1,0 +1,131 @@
+---
+title: "Tidy Tuesday 2"
+description: |
+  First Assignment Tidy Tuesday
+author:
+  - name: Ethan Deutsch
+date: 09-21-2021
+output:
+    html_document:
+    toc: true
+    toc_float: true
+    df_print: paged
+    code_download: true
+---
+```{r}
+library(dplyr)
+library(ggplot2)
+library(tidytuesdayR)
+library(tidymodels)
+library(tidyverse)
+library(rvest)
+```
+
+```{r}
+tuesdata <- tidytuesdayR::tt_load(2021, week = 39)
+nominees <- tuesdata$nominees
+```
+
+```{r}
+nominees %>%
+  select(-c(logo, page, page_id)) %>%
+  filter(distributor == c("Netflix", "Hulu", "HBO", "CBS", "Prime Video", "Disney+", "NBC", "ABC", "VH1", "FX Networks")) %>% #Top 10 Distributor Nominees since 2018
+  filter(year >= 2018) %>%
+  filter(type == "Nominee") %>%
+  ggplot(aes(x = distributor)) +
+  geom_bar()
+```
+
+```{r, fig.length = 5, fig.width = 5}    
+nominees %>%
+  select(-c(logo, page, page_id)) %>%
+  filter(year >= 2018) %>%
+  filter(type == "Nominee") %>%
+  filter(distributor == c("Netflix", "NBC", "HBO", "ABC", "CBS")) %>% # Top 5 Nominees
+  group_by(distributor, year) %>%
+  count(distributor) %>%
+  ggplot(aes(x = year, y = n, color = distributor)) +
+  labs(title = "Emmy Nominations by TV Distributor since 2018 (Top 5 only)", x = "Year", y = "Number of Nominations", color = "TV Distributor") +
+  geom_line() +
+  geom_point()
+
+nominees %>%
+  select(-c(logo, page, page_id)) %>%
+  filter(year >= 2018) %>%
+  filter(type == "Nominee") %>%
+  filter(distributor == c("Disney+", "Hulu", "FX Networks", "VH1", "Prime Video")) %>% # Top 5-10 Nominees
+  group_by(distributor, year) %>%
+  count(distributor) %>%
+  ggplot(aes(x = year, y = n, color = distributor)) +
+  labs(title = "Emmy Nominations by TV Distributor since 2018 (Top 6-10 only)", x = "Year", y = "Number of Nominations", color = "TV Distributor") +
+  geom_line() +
+  geom_point()
+```
+
+```{r, fig.length = 5, fig.width = 5}
+nominees %>%
+  select(-c(logo, page, page_id)) %>%
+  filter(year >= 2018) %>%
+  filter(type == "Winner") %>%
+  filter(distributor == c("Netflix", "NBC", "HBO", "ABC", "CBS")) %>% # Top 5 Nominees Since 2018
+  group_by(distributor, year) %>%
+  count(distributor) %>%
+  ggplot(aes(x = year, y = n, color = distributor)) +
+  labs(title = "Emmy Wins by TV Distributor since 2018 (Top 5 only)", x = "Year", y = "Number of Wins", color = "TV Distributor") +
+  geom_line() +
+  geom_point()
+
+nominees %>%
+  select(-c(logo, page, page_id)) %>%
+  filter(year >= 2018) %>%
+  filter(type == "Winner") %>%
+  filter(distributor == c("Disney+", "Hulu", "FX Networks", "VH1", "Prime Video")) %>% # Top 5-10 Nominees Since 2018
+  group_by(distributor, year) %>%
+  count(distributor) %>%
+  ggplot(aes(x = year, y = n, color = distributor)) +
+  labs(title = "Emmy Wins by TV Distributor since 2018 (Top 6-10 only)", x = "Year", y = "Number of Wins", color = "TV Distributor") +
+  geom_line() +
+  geom_point()
+```
+
+```{r, fig.length = 5, fig.width = 5}
+nominees %>%
+  select(-c(logo, page, page_id)) %>%
+  filter(distributor == c("Netflix", "Hulu", "HBO", "CBS", "Prime Video", "Disney+", "NBC", "ABC", "VH1", "FX Networks")) %>% #Top 10 Distributor Nominees since 2018
+  filter(year >= 2018) %>%
+  filter(type == "Nominee") %>%
+  ggplot(aes(x = year, fill = distributor)) +
+  labs(title = "Emmy Nominations Each Year by TV Distributor", x = "Year", y = "Number of Nominations", fill = "TV Distributor") +
+  geom_bar()
+  
+nominees %>%
+  select(-c(logo, page, page_id)) %>%
+  filter(distributor == c("Netflix", "Hulu", "HBO", "CBS", "Prime Video", "Disney+", "NBC", "ABC", "VH1", "FX Networks")) %>% #Top 10 Distributor Nominees since 2018
+  filter(year >= 2018) %>%
+  filter(type == "Winner") %>%
+  ggplot(aes(x = year, fill = distributor)) +
+  labs(title = "Emmy Wins Each Year by TV Distributor", x = "Year", y = "Number of Wins", fill = "TV Distributor") +
+  geom_bar()
+```
+
+```{r, fig.width = 5}
+nomswinners <- nominees %>% # Top Distributor Nominations by Year
+  select(-c(logo, page, page_id)) %>%
+  filter(year >= 2018) %>%
+  group_by(distributor, year, type) %>%
+  count() %>%
+  pivot_wider(names_from = type, values_from = n, values_fill = 0) %>%
+  mutate(win_ratio = Winner/(Nominee+Winner))
+
+nomswinners %>% 
+  filter(distributor %in% c("Netflix", "Hulu", "HBO", "CBS", "Prime Video", "Disney+", "NBC", "ABC", "VH1", "FX Networks")) %>%
+  ggplot(aes(x = win_ratio, y = distributor, color = as.factor(year))) +
+  geom_point() +
+  theme_minimal() +
+  labs(title = "Emmy Win Rate by TV Distributor", x = "Win Rate", y = "TV Distributor", color = "Year") +
+  scale_color_manual(values = c("green1", "cyan", "darkorchid1", "deeppink"))
+```
+
+Distill is a publication format for scientific and technical writing, native to the web.
+
+Learn more about using Distill at <https://rstudio.github.io/distill>.
