@@ -6,7 +6,7 @@ author:
   - name: Ethan Deutsch
 date: 09-21-2021
 output:
-    html_document:
+    distill::distill_article:
     toc: true
     toc_float: true
     df_print: paged
