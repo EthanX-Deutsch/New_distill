@@ -1,0 +1,60 @@
+---
+title: "Tidy Tuesday 3"
+description: |
+  Second Tidy Tuesday Assignment
+author:
+  - name: Ethan Deutsch
+    url: {}
+date: 10-06-2021
+output:
+  distill::distill_article:
+    self_contained: false
+---
+
+
+```{r}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+```{r}
+library(ggplot2)
+library(dplyr)
+library(tidytuesdayR)
+library(tidymodels)
+library(tidyverse)
+library(rvest)
+library(geofacet)
+```
+
+```{r}
+nurses <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-10-05/nurses.csv')
+```
+
+```{r, fig.height=8,fig.width=8}
+nurses %>%
+  ggplot(aes(x = Year)) +
+  geom_line(aes(y = `Hourly Wage Avg`), color = "blue") +
+  geom_line(aes(y = `Hourly Wage Median`), color = "red") +
+  facet_geo(~ State)
+```
+
+```{r, fig.height=8,fig.width=8}
+nurses %>%
+  ggplot(aes(x = Year)) +
+  geom_line(aes(y = `Annual Salary Avg`), color = "blue") +
+  geom_line(aes(y = `Annual Salary Median`), color = "red") +
+  facet_geo(~ State)
+```
+
+```{r, fig.height=8,fig.width=8}
+nurses %>%
+  ggplot(aes(x = Year, y = `Total Employed RN`)) +
+  geom_point(size = .5) +
+  facet_geo(~ State)
+```
+
+Distill is a publication format for scientific and technical writing, native to the web.
+
+Learn more about using Distill at <https://rstudio.github.io/distill>.
+
+
