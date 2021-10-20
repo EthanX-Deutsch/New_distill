@@ -1,5 +1,22 @@
 [
   {
+    "path": "posts/2021-10-20-tidy-tuesday-3/",
+    "title": "Tidy Tuesday 4",
+    "description": "Third Tidy Tuesday Assignment",
+    "author": [
+      {
+        "name": "Ethan Deutsch",
+        "url": {}
+      }
+    ],
+    "date": "2021-10-20",
+    "categories": [],
+    "contents": "\nR Markdown\nThis is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see http://rmarkdown.rstudio.com.\nWhen you click the Knit button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:\n\n\nlibrary(googlesheets4)\nlibrary(lubridate)\nlibrary(ggplot2)\nlibrary(dplyr)\nlibrary(gganimate)\nlibrary(transformr)\ngs4_deauth()\nharvest_2021 <- read_sheet(\"https://docs.google.com/spreadsheets/d/1DU6dpxrbPGW2oJHQ6TG_xibazoGhvmRcqk2iPGOaRUI/edit?usp=sharing\") %>%\nmutate(date = ymd(date))\n\n\n\nIncluding Plots\nYou can also embed plots, for example:\n\n\nsummed_harv <- harvest_2021 %>%\n  group_by(vegetable, variety) %>%\n  mutate(cume_weight = cumsum(weight)) %>%\n  summarise(weight, cume_weight, date)\n\n\n\n\n\nharv_anim <- summed_harv %>%\n  mutate(day = day(date)) %>%\n  mutate(month = month(date)) %>%\n  filter(vegetable %in% c(\"lettuce\", \"peppers\", \"potatoes\", \"squash\", \"tomatoes\")) %>%\n  ggplot(aes(x = date, y = cume_weight, color = vegetable)) +\n  geom_point(aes(group = seq_along(day))) +\n  facet_wrap(~vegetable) +\n  transition_reveal(date) +\n  labs(title = \"Cumulative Weight of Lisa's 5 Most Harvested Vegetables\", x = \"Date\", y = \"Cumulative Weight\", color = \"Vegetable\")\n\nharv_anim\n\n\n\nanim_save(\"Lisa-garden.gif\", harv_anim)\n\n\n\n\n\nknitr::include_graphics(\"Lisa-garden.gif\")\n\n\n\n\n\n\n\n",
+    "preview": {},
+    "last_modified": "2021-10-20T14:22:43-05:00",
+    "input_file": {}
+  },
+  {
     "path": "posts/2021-10-06-tidy-tuesday-2/",
     "title": "Tidy Tuesday 3",
     "description": "Second Tidy Tuesday Assignment",
