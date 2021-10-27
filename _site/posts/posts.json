@@ -17,6 +17,23 @@
     "input_file": {}
   },
   {
+    "path": "posts/2021-10-26-tidy-tuesday-4/",
+    "title": "Tidy Tuesday 4",
+    "description": "Third Tidy Tuesday Assignment",
+    "author": [
+      {
+        "name": "Ethan Deutsch",
+        "url": {}
+      }
+    ],
+    "date": "2021-10-20",
+    "categories": [],
+    "contents": "\nR Markdown\nThis is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see http://rmarkdown.rstudio.com.\nWhen you click the Knit button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:\n\n\ntuesdata <- tidytuesdayR::tt_load(2021, week = 42)\n\n\n\n    Downloading file 1 of 7: `aquaculture-farmed-fish-production.csv`\n    Downloading file 2 of 7: `capture-fisheries-vs-aquaculture.csv`\n    Downloading file 3 of 7: `capture-fishery-production.csv`\n    Downloading file 4 of 7: `fish-and-seafood-consumption-per-capita.csv`\n    Downloading file 5 of 7: `fish-stocks-within-sustainable-levels.csv`\n    Downloading file 6 of 7: `global-fishery-catch-by-sector.csv`\n    Downloading file 7 of 7: `seafood-and-fish-production-thousand-tonnes.csv`\n\nconsumption <- tuesdata$`fish-and-seafood-consumption-per-capita`\n\n\n\n\n\nnconsumption <- consumption %>%\n  mutate(quantity = `Fish, Seafood- Food supply quantity (kg/capita/yr) (FAO, 2020)`) %>%\n  select(Entity, Year, quantity)\n\nnconsumption %>%\n  filter(quantity > 70) %>%\n  ggplot(aes(x = Year, y = quantity, color = Entity)) +\n  geom_point()\n\n\n\nnconsumption %>%\n  filter(quantity < .15) %>%\n  ggplot(aes(x = Year, y = quantity, color = Entity)) +\n  geom_point()\n\n\n\n\n\n\ntop_fishing_anim <- nconsumption %>% \n  filter(Entity %in% c(\"Hong Kong\", \"Iceland\", \"Japan\", \"Kiribati\", \"Maldives\", \"Micronesia (region)\", \"Portugal\")) %>%\n  ggplot(aes(x=Year, y=Entity, fill=quantity)) +\n  geom_tile(color=\"white\", size=.5) +\n  scale_fill_gradient(low=\"white\", high=\"blue\") +\n  coord_equal() +\n  theme(plot.title=element_text(hjust=0)) +\n  theme(axis.ticks=element_blank()) + \n  theme(axis.text=element_text(size=7)) +\n  theme_minimal() +\n  transition_time(Year) +\n  shadow_mark()\n\nanimate(top_fishing_anim, height = 800, width = 800)\n\n\n\n\n\n\nlowest_fishing_anim <- nconsumption %>% \n  filter(Entity %in% c(\"Afghanistan\", \"Eswatini\", \"Ethiopia\", \"Ethiopia PDR\", \"Kyrgyzstan\", \"Lesotho\", \"Mongolia\", \"Niger\", \"Tajikistan\", \"Timor\")) %>%\n  ggplot(aes(x=Year, y=Entity, fill=quantity)) +\n  geom_tile(color=\"white\", size=.5) +\n  scale_fill_gradient(low=\"red\", high=\"white\") +\n  coord_equal() +\n  theme(plot.title=element_text(hjust=0)) +\n  theme(axis.ticks=element_blank()) + \n  theme(axis.text=element_text(size=7)) +\n  theme_minimal() +\n  transition_time(Year) +\n  shadow_mark()\n\nanimate(lowest_fishing_anim, height = 800, width = 800)\n\n\n\n\n\n\nanim_save(\"topfish.gif\", top_fishing_anim)\nanim_save(\"lowfish.gif\", lowest_fishing_anim)\n\n\n\n\n\nknitr::include_graphics(\"topfish.gif\")\n\n\n\nknitr::include_graphics(\"lowfish.gif\")\n\n\n\n\n\n\n\n",
+    "preview": "posts/2021-10-26-tidy-tuesday-4/Tidy-Tuesday-4_files/figure-html5/unnamed-chunk-2-1.png",
+    "last_modified": "2021-10-26T19:10:51-05:00",
+    "input_file": "Tidy-Tuesday-4.knit.md"
+  },
+  {
     "path": "posts/2021-10-06-tidy-tuesday-2/",
     "title": "Tidy Tuesday 3",
     "description": "Second Tidy Tuesday Assignment",
